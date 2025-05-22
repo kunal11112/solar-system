@@ -46,9 +46,9 @@ jobs:
 
    docker-login:
     needs: unit-testing
-    permissions:
-       packages: write
     runs-on: ubuntu-latest
+    permissions:
+            packages: write
     steps:
       - name: checkout repo
         uses: actions/checkout@v4
