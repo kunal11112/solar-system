@@ -62,7 +62,7 @@ jobs:
         with:
            context: .   ## Accept the path where you have docker file in our case dockerfile present in root directory in repo
            push: false
-           tag: $\  ## version will be dynamically changes with sha value of commit id.
+           tags: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}  ## version will be dynamically changes with sha value of commit id.
 
       - name: docker image testing
         run: |
