@@ -9,18 +9,18 @@ on:
 
 jobs:
    unit-testing:
-   runs-on: ubuntu-latest
-   steps:
-   - name: Checkout repo
-     uses: actions/checkout@v4
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout repo
+          uses: actions/checkout@v4
 
-   - name: Setup nodejs version-18
-     uses: actions/setup-node@v3
-     with:
-       node-version: 18
+        - name: Setup nodejs version-18
+          uses: actions/setup-node@v3
+          with:
+            node-version: 18
 
-   - name: Install dependencies
-     run: npm Install
+        - name: Install dependencies
+          run: npm Install
 
-   - name: Unit testing
-     run: npm test
+        - name: Unit testing
+          run: npm test
