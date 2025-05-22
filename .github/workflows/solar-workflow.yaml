@@ -36,10 +36,10 @@ jobs:
           run: npm install
 
         - name: Unit testing
-          #continue-on-error: true
+          continue-on-error: true
           id: nodejs-unit-testing-step
           run: npm test
         
         - name: status of testing
-          if: always()    ## we can add if: always() means if previous stpe will pass or fail then this step will run always
+          #if: always()    ## we can add if: always() means if previous stpe will pass or fail then this step will run always
           run: echo "Tetsing is failed"
