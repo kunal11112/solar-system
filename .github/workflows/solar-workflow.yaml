@@ -51,11 +51,19 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v4
       
-      - name: Login to Docker Hub
+      #- name: Login to Docker Hub
+      #  uses: docker/login-action@v3
+      #  with:
+      #    username: ${{ vars.DOCKERHUB_USERNAME }}
+      #    password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to github container registry 
         uses: docker/login-action@v3
         with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
 
       - name: Docker build for testing
         uses: docker/build-push-action@v4
@@ -71,9 +79,11 @@ jobs:
                -p 3000:3000 \
                ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
 
-      - name: Docker push
+      - name: Docker/Github registry push
         uses: docker/build-push-action@v4
         with:
            context: .   ## Accept the path where you have docker file in our case dockerfile present in root directory in repo
            push: true
-           tags: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
+           tags: |
+               ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
+               ghcr.io/${{ github.repository_owner }}/solar-system:${{ github.sha }}
