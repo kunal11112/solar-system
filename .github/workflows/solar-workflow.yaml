@@ -86,6 +86,4 @@ jobs:
         with:
            context: .   ## Accepts the path where you have docker file in our case dockerfile present in root directory in repo
            push: true
-           tags: |
-               ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
-               #ghcr.io/${{ github.repository_owner }}/solar-system:${{ github.sha }} 
+           tags: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}  ####ghcr.io/${{ github.repository_owner }}/solar-system:${{ github.sha }} 
