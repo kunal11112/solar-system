@@ -46,6 +46,8 @@ jobs:
 
    docker-login:
     needs: unit-testing
+    permissions:
+       packages: write
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo
