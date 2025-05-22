@@ -70,3 +70,10 @@ jobs:
             docker run -it -d --name solar-system \
                -p 3000:3000 \
                ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
+
+      - name: Docker push
+        uses: docker/build-push-action@v4
+        with:
+           context: .   ## Accept the path where you have docker file in our case dockerfile present in root directory in repo
+           push: true
+           tags: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
