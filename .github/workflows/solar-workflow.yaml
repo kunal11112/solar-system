@@ -35,5 +35,5 @@ jobs:
           run: npm test
         
         - name: status of testing
-          if: steps.nodejs-unit-testing-step.outcome == 'failure' || steps.nodejs-unit-testing-step.outcome == 'success' 
+          if: failure() && steps.nodejs-unit-testing-step.outcome == 'failure' || steps.nodejs-unit-testing-step.outcome == 'success' 
           run: echo "Tetsing is failed"
