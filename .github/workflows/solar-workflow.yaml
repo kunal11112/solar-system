@@ -33,7 +33,7 @@ jobs:
             key: ubuntu-latest-node-modules-${{ hashfiles('package-lock.json') }}
 
         - name: Install dependencies
-          run: npm 
+          run: npm install
 
         - name: Unit testing
           #continue-on-error: true
