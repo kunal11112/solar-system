@@ -24,10 +24,16 @@ jobs:
         - name: Setup nodejs version-${{matrix.nodejs_version}}
           uses: actions/setup-node@v3
           with:
-            node-version: ${{matrix.nodejs_version}}
+            node-version: 18
+
+        - name: cache npm dependencies
+          uses: actions/cache@v3
+          with:
+            path: node_modules
+            key: ubuntu-latest-node-modules-${{ hashfiles('package-lock.json') }}
 
         - name: Install dependencies
-          run: npm install
+          run: npm 
 
         - name: Unit testing
           #continue-on-error: true
@@ -35,5 +41,5 @@ jobs:
           run: npm test
         
         - name: status of testing
-          if: failure() && steps.nodejs-unit-testing-step.outcome == 'failure' || steps.nodejs-unit-testing-step.outcome == 'success' 
+          if: always()    ## we can add if: always() means if previous stpe will pass or fail then this step will run always
           run: echo "Tetsing is failed"
