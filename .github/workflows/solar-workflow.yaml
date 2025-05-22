@@ -56,3 +56,17 @@ jobs:
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Docker build for testing
+        uses: actions/build-push-action@v4
+        with:
+           context: .   ## Accept the path where you have docker file in our case dockerfile present in root directory in repo
+           push: false
+           tag: $\  ## version will be dynamically changes with sha value of commit id.
+
+      - name: docker image testing
+        run: |
+            docker images
+            docker run -it -d --name solar-system \
+               -p 3000:3000 \
+               ${{ env.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
