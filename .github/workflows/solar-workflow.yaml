@@ -144,11 +144,10 @@ jobs:
     needs: dev-deploy
     runs-on: ubuntu-latest
     steps:
-      - name: tets url output using curl and jq
+      - name: test url output using curl and jq
         #env:
           #URL: {{ needs.dev-deploy.outputs.APP_INGRESS_URL }}   # we are using the output from one job to other
         run: |
-            echo $URL
             echo "hello solar system"
             curl http://18.234.61.209:31886/ -s -k .status | grep -i live
         
