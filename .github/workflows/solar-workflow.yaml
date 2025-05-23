@@ -125,8 +125,7 @@ jobs:
         env:
           NAMESPACE: ${{ vars.NAMESPACE }}
           REPLICAS: ${{ vars.REPLICAS }}
-          IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}  
-          #INGRESS_IP: {{ env.INGRESS_IP}}   ## so we will call the env variable of ingress using line 117 also please add $ before {{ curly places
+          IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }} 
 
       - name: Check files
         run: |
