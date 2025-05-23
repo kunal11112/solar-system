@@ -121,7 +121,7 @@ jobs:
         with: 
           tokenPrefix: '_{_'     # you will check prefix and suffix in deployment.yaml
           tokenSuffix: '_}_'
-          files: '["kubernetes\development\*.yaml"]'    # manifest files are present in development folder
+          files: '["kubernetes/development/*.yaml"]'    # manifest files are present in development folder
         env:
           NAMESPACE: ${{ vars.NAMESPACE }}
           REPLICAS: ${{ vars.REPLICAS }}
