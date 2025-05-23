@@ -89,7 +89,7 @@ jobs:
            tags: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}  ####ghcr.io/${{ github.repository_owner }}/solar-system:${{ github.sha }}
            
    dev-deploy:
-    if: contains(github.ref, 'feature/')   ## this job wil only run if the current branch will be feature
+    if: contains(github.ref, 'feature')   ## this job wil only run if the current branch will be feature
     needs: docker-login
     environment:  
         name: development                ## it will apply all protection rule that we have created
@@ -145,7 +145,7 @@ jobs:
           kubectl apply -f kubernetes/development
 
    integration-testing:
-    if: contains(github.ref, 'feature/') 
+    if: contains(github.ref, 'feature') 
     name: Dev Integration tetsing
     needs: dev-deploy
     runs-on: ubuntu-latest
