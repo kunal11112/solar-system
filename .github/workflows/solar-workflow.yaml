@@ -208,11 +208,11 @@ jobs:
 
       - name: Check files
         run: |
-           cat kubernetes/production/*.yaml
+           cat kubernetes/staging/*.yaml
 
       - name: Deploy to prod env
         run: |
-          kubectl apply -f kubernetes/production
+          kubectl apply -f kubernetes/staging
 
    prod-integration-testing:
     if: github.ref == 'refs/heads/main' 
