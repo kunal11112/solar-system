@@ -119,7 +119,7 @@ jobs:
       - name: replace tokens in manifest file
         uses: cschleiden/replace-tokens@v1
         with: 
-          tokenPrefix: '{'     # you will check prefix and suffix in deployment.yaml
+          tokenPrefix: '${'     # you will check prefix and suffix in deployment.yaml
           tokenSuffix: '}'
           files: '["kubernetes/development/*.yaml"]'    # manifest files are present in development folder
         env:
