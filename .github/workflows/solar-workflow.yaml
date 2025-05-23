@@ -100,6 +100,12 @@ jobs:
         with:
           version: 'v1.26.0'
 
+      - name: set kubeconfig file
+        uses: azure/k8s-set-context@v3
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+
       - name: kubernetes cluster details
         run: |
             kubectl version --short
