@@ -90,6 +90,8 @@ jobs:
            
    dev-deploy:
     needs: docker-login
+    #outputs:
+      #APP_INGRESS_URL: #{{steps.set-ingress-host-address.outputs.APP_INGRESS_HOST}}  ## here we have set the output for INGRESS_URL at job level so we can use this in other jobs
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo
@@ -113,8 +115,9 @@ jobs:
             kubectl get nodes
 
       #- name: Save Nginx Ingress Controller IP as a GITHUB environment variable
+        # id: set-ingress-host-address
       #  run: |
-      #     echo "INGRESS_IP=$(kubectl -n ingress-nginx get services ingress-nginx-controller -o jsonpath="{.status.loadBalancer.ingress[0].ip}")" >> $GITHUB_ENV
+      #     echo "INGRESS_IP=$(kubectl -n ingress-nginx get services ingress-nginx-controller -o jsonpath="{.status.loadBalancer.ingress[0].ip}")" >> $GITHUB_OUTPUT
 
       - name: replace tokens in manifest file
         uses: cschleiden/replace-tokens@v1
@@ -135,6 +138,21 @@ jobs:
       - name: Deploy to dev env
         run: |
           kubectl apply -f kubernetes/development
+
+   integration-testing:
+    name: Dev Integration tetsing
+    needs: dev-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: tets url output using curl and jq
+        #env:
+          #URL: {{ needs.dev-deploy.outputs.APP_INGRESS_URL }}   # we are using the output from one job to other
+        run: |
+            echo $URL
+            echo "hello solar system"
+            curl http://18.234.61.209:31886/ -s -k .status | grep -i live
+        
+
 
 
 
