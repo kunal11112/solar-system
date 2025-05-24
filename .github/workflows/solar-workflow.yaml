@@ -94,6 +94,12 @@ jobs:
     uses: ./.github/workflows/reuse-deployment.yaml
     secrets:
       k8s-kubeconfig: ${{ secrets.KUBECONFIG }}   ## This is how we can pass secret from caller workflow to called workflow
+    #with:                                              
+       # mongodb-uri: #{{ vard.MONGO_URI }}   we are calling variable using with which we have defined in reusalble workflow
+    with:
+      environment: development
+      k8s-manifest-dir: kubernetes/development/
+
 
    integration-testing:
     if: contains(github.ref, 'feature') 
@@ -114,7 +120,12 @@ jobs:
     needs: docker-login
     uses: ./.github/workflows/reuse-deployment.yaml     ## this is the caller workflow here we uses the relative path of reusable workflow file
     secrets:
-      k8s-kubeconfig: ${{ secrets.KUBECONFIG }}                                                    ## NOTE: Secrets will not be called from reusable workfloe file for that we need to use 
+      k8s-kubeconfig: ${{ secrets.KUBECONFIG }} 
+    #with:
+       # mongodb-uri: #{{ vard.MONGO_URI }}   
+    with:
+      environment: production      
+      k8s-manifest-dir: kubernetes/development/                                          ## NOTE: Secrets will not be called from reusable workfloe file for that we need to use 
                                                             ##  secrets = inherit  or 
    prod-integration-testing:
     if: github.ref == 'refs/heads/main' 

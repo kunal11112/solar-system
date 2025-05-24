@@ -1,14 +1,29 @@
 name: Reusable-deploy-Workflow
 
 on:
-  workflow_call:   ## This is called workflow where main solay workflow file is called this reusable workflow file
+  workflow_call:
+     #inputs:      ## NOTE: environment variables is also not accessible between called and caller workflow                   
+        #mongodb-uri:   To use that we first need to create a variable at repostiory level then we can call it 
+            #required: true    using inputs in reusable workflow
+            #type: string      we need to pass this input value in solar-workflow as well please check from there
+     inputs:
+        k8s-manifest-dir:
+            description: Directory containing manifest files         ## This is called workflow where main solar workflow file is called this reusable workflow file
+            default: kubernetes/
+            required: true
+            type: string
+        environment:
+            description: provide depoyment env
+            default: dev
+            required: true
+            type: string
      secrets:
         k8s-kubeconfig:
            required: true
 jobs:
    reuse-deploy:
     environment:  
-        name: development                ## it will apply all protection rule that we have created
+        name: ${{ inputs.environment }}               ## it will apply all protection rule that we have created
         url:  http://18.234.61.209:31886/
 
     #outputs:
@@ -45,7 +60,7 @@ jobs:
         with: 
           tokenPrefix: '${'     # you will check prefix and suffix in deployment.yaml
           tokenSuffix: '}'
-          files: '["kubernetes/development/*.yaml"]'    # manifest files are present in development folder
+          files: '["${{ inputs.k8s-manifest-dir }}/*.yaml"]'    # manifest files are present in development folder
         env:
           NAMESPACE: ${{ vars.NAMESPACE }}
           REPLICAS: ${{ vars.REPLICAS }}
@@ -54,10 +69,10 @@ jobs:
 
       - name: Check files
         run: |
-           cat kubernetes/development/*.yaml
+           cat ${{ inputs.k8s-manifest-dir }}/*.yaml
 
       - name: Deploy to dev env
         run: |
-          kubectl apply -f kubernetes/development
+          kubectl apply -f ${{ inputs.k8s-manifest-dir }}
           
 
