@@ -21,7 +21,7 @@ jobs:
         - name: Checkout repo
           uses: actions/checkout@v4
 
-        - name: Setup nodejs version-${{matrix.nodejs_version}}
+        - name: Setup nodejs version-18
           uses: actions/setup-node@v3
           with:
             node-version: 18
