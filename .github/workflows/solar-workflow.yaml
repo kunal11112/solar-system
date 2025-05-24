@@ -113,7 +113,8 @@ jobs:
     if: github.ref == 'refs/heads/main'   ## only deployed in main branch
     needs: docker-login
     uses: ./.github/workflows/reuse-deployment.yaml     ## this is the caller workflow here we uses the relative path of reusable workflow file
-                                                        ## NOTE: Secrets will not be called from reusable workfloe file for that we need to use 
+    secrets:
+      k8s-kubeconfig: ${{ secrets.KUBECONFIG }}                                                    ## NOTE: Secrets will not be called from reusable workfloe file for that we need to use 
                                                             ##  secrets = inherit  or 
    prod-integration-testing:
     if: github.ref == 'refs/heads/main' 
