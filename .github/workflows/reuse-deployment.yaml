@@ -1,8 +1,10 @@
 name: Reusable-deploy-Workflow
 
 on:
-  workflow_call
-
+  workflow_call:   ## This is called workflow where main solay workflow file is called this reusable workflow file
+     secrets:
+        k8s-kubeconfig:
+           required: true
 jobs:
    reuse-deploy:
     environment:  
@@ -25,7 +27,7 @@ jobs:
         uses: azure/k8s-set-context@v3
         with:
           method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
+          kubeconfig: ${{ secrets.k8s-kubeconfig }}
 
       - name: kubernetes cluster details
         run: |
