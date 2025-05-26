@@ -25,15 +25,12 @@ jobs:
           uses: actions/setup-node@v3
           with:
             node-version: 18
-
-        - name: cache npm dependencies
-          uses: actions/cache@v3
+        
+        - name: Composite Action - Cache and install npm dependencies
+          uses: ./..github/custom-actions/npm-actions
           with:
-            path: node_modules
-            key: ubuntu-latest-node-modules-${{ hashfiles('package-lock.json') }}
+            path-of-folder: node_modules
 
-        - name: Install dependencies
-          run: npm install
 
         - name: Unit testing
           continue-on-error: true
@@ -109,7 +106,7 @@ jobs:
     steps:
       - name: test url output using curl and jq
         #env:
-          #URL: {{ needs.dev-deploy.outputs.APP_INGRESS_URL }}   # we are using the output from one job to other
+          #URL: {{ needs.dev-deploy.outputs.application-url }}   # we are using the output from one job to other
         run: |
             echo "hello dev is working fine for solar system"
 
@@ -135,7 +132,7 @@ jobs:
     steps:
       - name: test url output using curl and jq
         #env:
-          #URL: {{ needs.dev-deploy.outputs.APP_INGRESS_URL }}   # we are using the output from one job to other
+          #URL: {{ needs.dev-deploy.outputs.application-url }}   # we are using the output from one job to other
         run: |
             echo "hello dev is working fine for solar system"
         

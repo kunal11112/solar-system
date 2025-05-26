@@ -1,0 +1,19 @@
+name: 'NPM custom action'
+description: 'Used for installing aching npm packages'
+inputs:
+    path-of-folder:  # id of input
+    description: 'the path of cache'
+    required: true
+    default: 'World'
+runs:
+  using: "composite"
+  steps:
+        - name: cache npm dependencies
+          uses: actions/cache@v3
+          with:
+            path: ${{ inputs.path-of-folder }}
+            key: ubuntu-latest-node-modules-${{ hashfiles('package-lock.json') }}
+
+        - name: Install dependencies
+          run: npm install
+          shell: bash

@@ -20,6 +20,10 @@ on:
      secrets:
         k8s-kubeconfig:
            required: true
+     #outputs:       
+      #  application-uri:
+       #     value: #{{ jobs.reuse-deploy.APP_INGRESS_URL}}
+
 jobs:
    reuse-deploy:
     environment:  
