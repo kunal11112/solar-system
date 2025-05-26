@@ -2,8 +2,8 @@ name: 'NPM custom action'
 description: 'Used for installing aching npm packages'
 inputs:
     path-of-folder:  # id of input
-    description: 'the path of cache'
-    required: true
+     description: 'the path of cache'
+     required: true
     
 runs:
   using: "composite"
