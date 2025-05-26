@@ -4,7 +4,7 @@ inputs:
     path-of-folder:  # id of input
     description: 'the path of cache'
     required: true
-    default: 'World'
+    
 runs:
   using: "composite"
   steps:
